@@ -1,6 +1,7 @@
 use std::io::{stdout, BufWriter, Write};
 
 use clap::{ArgAction, Parser};
+use nanorand::Rng;
 
 #[derive(Parser, Debug)]
 #[command()]
@@ -22,7 +23,7 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    let mut rng = fastrand::Rng::new();
+    let mut rng = nanorand::WyRand::new();
     let mut _i = 0;
 
     let alpha = "0123456789abcdef"
@@ -35,13 +36,15 @@ fn main() {
     let mut std = BufWriter::new(stdout());
 
     (0..buff.len()).for_each(|j| {
-        buff[j] = rng.choice(alphas.iter()).unwrap().to_owned();
+        buff[j] = alpha[rng.generate_range(0..alpha.len())]
+        // buff[j] = rng.choice(alphas.iter()).unwrap().to_owned();
     });
 
     loop {
         if args.regen_buffer {
             (0..buff.len()).for_each(|j| {
-                buff[j] = rng.choice(alphas.iter()).unwrap().to_owned();
+                buff[j] = alpha[rng.generate_range(0..alpha.len())]
+                // buff[j] = rng.choice(alphas.iter()).unwrap().to_owned();
             });
         }
         std.write_all(buff.as_slice())

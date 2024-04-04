@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive"] }
-fastrand = "2.0.2"
+nanorand = { version = "0.7.0", features = ["getrandom", "rdseed", "zeroize"] }
