@@ -30,7 +30,6 @@ fn main() {
         .chars()
         .map(|c| c as u8)
         .collect::<Vec<u8>>();
-    let alphas: &[u8] = alpha.as_slice();
 
     let mut buff = vec![0u8; args.buffer_size];
     let mut std = BufWriter::new(stdout());
@@ -47,6 +46,7 @@ fn main() {
                 // buff[j] = rng.choice(alphas.iter()).unwrap().to_owned();
             });
         }
+        buff[args.buffer_size - 1] = 10;
         std.write_all(buff.as_slice())
             .expect("Unable to write to file");
         // buff_writer.flush();
